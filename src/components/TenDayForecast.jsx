@@ -1,21 +1,49 @@
 import React from 'react';
+import { Card } from 'react-bootstrap';
+import { format } from 'date-fns';
 
-const formatDate = (timestamp) => {
-  const date = new Date(timestamp * 1000);
-  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+const getWeatherEmoji = (summary) => {
+  const summaryLowerCase = summary.toLowerCase();
+  if (summaryLowerCase.includes('rain') || summaryLowerCase.includes('drizzle')) {
+    return '🌧️';
+  } else if (summaryLowerCase.includes('snow') || summaryLowerCase.includes('sleet')) {
+    return '❄️';
+  } else if (summaryLowerCase.includes('fog') || summaryLowerCase.includes('haze')) {
+    return '🌫️';
+  } else if (summaryLowerCase.includes('cloud') || summaryLowerCase.includes('overcast')) {
+    return '☁️';
+  } else if (summaryLowerCase.includes('sun') || summaryLowerCase.includes('clear')) {
+    return '☀️';
+  } else if (summaryLowerCase.includes('partly cloudy')) {
+    return '🌤️';
+  } else {
+    return '🌦️';
+  }
 };
+
 
 const TenDayForecast = ({ data }) => {
   return (
     <div>
-      <h2>7-Day Forecast</h2>
-      <ul>
-        {data.data.slice(0, 10).map((day, index) => (
-          <li key={index}>
-            {formatDate(day.time)} - {day.summary} - Min: {day.temperatureMin} °F, Max: {day.temperatureMax} °F
-          </li>
+      <h2 className="mb-4">Weekly Forecast</h2>
+      <div className="card-group">
+        {data.data.map((day, index) => (
+          <Card key={index} className="mb-4">
+            <Card.Body>
+              <Card.Title>{format(new Date(day.time * 1000), 'EEE, MMM d')}</Card.Title>
+              <Card.Text>
+                <strong>{getWeatherEmoji(day.summary)}</strong> {day.summary}
+              </Card.Text>
+              <Card.Text>
+                <strong>High:</strong> {day.temperatureHigh} °F
+              </Card.Text>
+              <Card.Text>
+                <strong>Low:</strong> {day.temperatureLow} °F
+              </Card.Text>
+            </Card.Body>
+          </Card>
         ))}
-      </ul>
+      </div>
     </div>
   );
 };

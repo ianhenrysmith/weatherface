@@ -4,6 +4,8 @@ import CurrentWeather from './components/CurrentWeather';
 import TenDayForecast from './components/TenDayForecast';
 import HourlyTemperatureChart from './components/HourlyTemperatureChart';
 
+import { Container, Row, Col } from 'react-bootstrap';
+
 const apiKey = 'NaTgkdwBe37Y1r0JAHXlr1IoOskyKQkB7Brwngt0';
 const latitude = '39.754667';
 const longitude = '-105.027268';
@@ -20,18 +22,22 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
-      <h1>Weather App</h1>
-      {weatherData ? (
-        <>
-          <CurrentWeather data={weatherData.currently} />
-          <TenDayForecast data={weatherData.daily} />
-          <HourlyTemperatureChart data={weatherData.hourly.data} />
-        </>
-      ) : (
-        <p>Loading weather data...</p>
-      )}
-    </div>
+    <Container>
+      <h1 className="text-center my-4">Weather App</h1>
+      <Row>
+        <Col>
+          {weatherData ? (
+            <>
+              <CurrentWeather data={weatherData.currently} />
+              <TenDayForecast data={weatherData.daily} />
+              <HourlyTemperatureChart data={weatherData.hourly.data} />
+            </>
+          ) : (
+            <p>Loading weather data...</p>
+          )}
+        </Col>
+      </Row>
+    </Container>
   );
 }
 

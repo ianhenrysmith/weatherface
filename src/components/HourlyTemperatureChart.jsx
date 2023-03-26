@@ -2,6 +2,7 @@ import React from 'react';
 import { Chart, registerables } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import { format, addHours } from 'date-fns';
+import { Card } from 'react-bootstrap';
 
 Chart.register(...registerables);
 
@@ -34,10 +35,12 @@ const HourlyTemperatureChart = ({ data }) => {
   };
 
   return (
-    <div>
-      <h2>Hourly Temperature</h2>
-      <Line data={chartData} options={options} />
-    </div>
+    <Card className="mb-4">
+      <Card.Body>
+        <Card.Title>Hourly Temperature Chart</Card.Title>
+        <Line data={chartData} options={options} />
+      </Card.Body>
+    </Card>
   );
 };
 
