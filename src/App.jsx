@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import CurrentWeather from './components/CurrentWeather';
 import TenDayForecast from './components/TenDayForecast';
+import HourlyTemperatureChart from './components/HourlyTemperatureChart';
 
 const apiKey = 'NaTgkdwBe37Y1r0JAHXlr1IoOskyKQkB7Brwngt0';
 const latitude = '39.754667';
@@ -25,6 +26,7 @@ function App() {
         <>
           <CurrentWeather data={weatherData.currently} />
           <TenDayForecast data={weatherData.daily} />
+          <HourlyTemperatureChart data={weatherData.hourly.data} />
         </>
       ) : (
         <p>Loading weather data...</p>
