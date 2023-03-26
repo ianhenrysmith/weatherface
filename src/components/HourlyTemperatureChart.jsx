@@ -1,11 +1,18 @@
 import React from 'react';
 import { Chart, registerables } from 'chart.js';
 import { Line } from 'react-chartjs-2';
+import { format, addHours } from 'date-fns';
+
 Chart.register(...registerables);
 
 const HourlyTemperatureChart = ({ data }) => {
+  const currentTime = new Date();
+
   const chartData = {
-    labels: data.map((hour, index) => index),
+    labels: data.map((hour, index) => {
+      const labelTime = addHours(currentTime, index);
+      return format(labelTime, 'h aaa');
+    }),
     datasets: [
       {
         label: 'Next 48 Hours (°F)',
